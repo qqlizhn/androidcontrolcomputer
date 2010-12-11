@@ -144,6 +144,7 @@ int udp_sendiphostname(int udp_port){
 			  if(strcmp(recvBuf,"cmd:android->pc:getiphostname")==0){
 			     
 			     HOSTENT *hostEntry;
+
 	             gethostname(hostName , sizeof(hostName));
                  printf("пео╒:get hostname: %s\n",hostName);
                  hostEntry = gethostbyname( hostName );
