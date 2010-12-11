@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+
+<TextView  
+    android:id ="@+id/textView_iphostname"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/title"
+    />
+    
+
+<Button android:text="@string/button_connwifi" android:id="@+id/button_connwifi" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+
+<Button android:text="@string/button_getip" android:id="@+id/button_getip" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<Button android:text="@string/button_shutdown" android:id="@+id/button_shutdown" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<Button android:text="@string/button_reboot" android:id="@+id/button_reboot" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<Button android:text="@string/button_logoff" android:id="@+id/button_logoff" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+
+
+</LinearLayout>
