@@ -5,7 +5,7 @@
 
     <string name="title">手机控制电脑[提示：按步骤操作]</string>
     
-    <string name="button_connwifi">第一步：WIFI连接无线路由</string>
+    <string name="button_connwifi">第一步：[手工设置]WIFI连接无线路由</string>
     <string name="button_getip">第二步：获取电脑IP</string>
     
 <string name="button_shutdown">第三步：操作->关闭电脑</string>
