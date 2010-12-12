@@ -172,6 +172,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\commandThread.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PCServerConsole.cpp"
 				>
 			</File>
@@ -195,6 +199,14 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\tools.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\udpiphostThread.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -202,11 +214,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\commandThread.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
 			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tools.h"
+				>
+			</File>
+			<File
+				RelativePath=".\udpiphostThread.h"
 				>
 			</File>
 		</Filter>
