@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import android.widget.Toast;
 
@@ -21,7 +22,9 @@ public class CommandAsyncTask extends android.os.AsyncTask<CommandArg,Integer,Co
 	protected CommandResultInfo doInBackground(CommandArg... arg0) {
 		// 后台处理任务		
 		CommandArg commandArg = arg0[0];
-		return this.sendCommond(commandArg.ip, commandArg.port, commandArg.command);
+		
+		
+		return this.sendCommond(commandArg.computerInfos, commandArg.port, commandArg.command);
 
 	}
 
@@ -34,16 +37,16 @@ public class CommandAsyncTask extends android.os.AsyncTask<CommandArg,Integer,Co
 	@Override
 	protected void onPostExecute(CommandResultInfo result) {
 		// 处理任务完成之后
-		Toast.makeText(androidClient, result.msg, Toast.LENGTH_LONG).show();
-		this.androidClient.getIphostnameTxtView().setText(result.msg);
+		Toast.makeText(androidClient, result.msg, Toast.LENGTH_SHORT).show();
+		this.androidClient.getStateTxtView().setText(result.msg);
 		
 	}
 
 	@Override
 	protected void onPreExecute() {
 		// 处理任务之前
-		Toast.makeText(androidClient, "正在发送命令......", Toast.LENGTH_LONG).show();
-		this.androidClient.getIphostnameTxtView().setText("正在发送命令......");
+		Toast.makeText(androidClient, "正在给所选控制电脑发送命令......", Toast.LENGTH_SHORT).show();
+		this.androidClient.getStateTxtView().setText("正在给所选控制电脑发送命令......");
 
 	}
 
@@ -55,78 +58,95 @@ public class CommandAsyncTask extends android.os.AsyncTask<CommandArg,Integer,Co
 	
 	
 	
-	private CommandResultInfo sendCommond(String host,int port,String commond) {
+	private CommandResultInfo sendCommond(List<ComputerInfo> cpList,int port,String commond) {
 
 		InputStream in = null;
 		OutputStream out = null;
 
 		Socket cSocket = null;
 		
-		CommandResultInfo resInfo = new CommandResultInfo();
-		resInfo.rs = false;
-		resInfo.msg = "";
+		CommandResultInfo resInfo1 = new CommandResultInfo();
+		resInfo1.rs = true;
+		resInfo1.msg = "";
 		
 		
-		if(host==null || "".equals(host)){
-			resInfo.rs = false;
-			resInfo.msg = "IP 为空，请先获取IP。";
+		if(cpList==null || (cpList.size()==0)){
+			resInfo1.rs = false;
+			resInfo1.msg = "没有选择控制电脑，请先获取控制电脑。";
 			
-			return resInfo;
+			return resInfo1;
 			
 		}
 		
- 		try {
-			cSocket = new Socket(host, port);
+		for(int i=0;i<cpList.size();i++){
+			
+			CommandResultInfo resInfo = new CommandResultInfo();
+			resInfo.rs = true;
+			resInfo.msg = "";
+			
+			ComputerInfo c = (ComputerInfo) cpList.get(i);
+			
+			try {
+				cSocket = new Socket(c.IP, port);
 
-			// 设置超时时间
-			cSocket.setSoTimeout(Config.connection_timeout);
-			if (cSocket != null) {
-				out = cSocket.getOutputStream();
-				in = cSocket.getInputStream();
+				// 设置超时时间
+				cSocket.setSoTimeout(Config.connection_timeout);
+				if (cSocket != null) {
+					out = cSocket.getOutputStream();
+					in = cSocket.getInputStream();
 
-				String data = commond;
-				out.write(data.getBytes());
-
-			}
-
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			resInfo.rs = false;
-			resInfo.msg = "命令发送出现错误(未知主机)："+e.getMessage();
-			return resInfo;
-		} catch (IOException e) {
-			e.printStackTrace();
-			resInfo.rs = false;
-			resInfo.msg = "命令发送出现错误(传输出错)："+e.getMessage();
-			return resInfo;
-		} finally {
-			if (cSocket != null) {
-				try {
-					cSocket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+					String data = commond;
+					out.write(data.getBytes());
 				}
-			}
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+				resInfo.rs = false;
+				resInfo.msg = "命令发送到控制电脑 "+c.IP+"-"+c.hostName+" 出现错误(未知主机)："+e.getMessage()+";";
+            
+			} catch (IOException e) {
+				e.printStackTrace();
+				resInfo.rs = false;
+				resInfo.msg = "命令发送到控制电脑 "+c.IP+"-"+c.hostName+" 出现错误(传输出错)："+e.getMessage()+";";
+
+			} finally {
+				if (cSocket != null) {
+					try {
+						cSocket.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (out != null) {
+					try {
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				if (in != null) {
+					try {
+						in.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+			
+			if(resInfo.rs==true){
+				resInfo.msg ="命令发送到控制电脑 "+c.IP+"-"+c.hostName+" 成功;";
+				resInfo.rs = true;
+			}		
+			
+			resInfo1.msg+=resInfo.msg;
 		}
-		resInfo.msg ="命令发送成功";
-		resInfo.rs = true;
 		
-		return resInfo;
+		
+		resInfo1.rs = true;
+		resInfo1.msg = "给所选控制电脑发送命令完成。执行情况："+resInfo1.msg;
+ 		
+		return resInfo1;
 
 	}
 

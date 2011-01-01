@@ -1,5 +1,8 @@
 package com.liaowf.androidpc.androidclient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UDPIPHostNameResultInfo {
 
 	
@@ -8,7 +11,6 @@ public class UDPIPHostNameResultInfo {
 	public String msg = "";
 	
 	
-	public String IP = "";
-	
-	public String hostName = "";
+	public ComputerInfo computers = new ComputerInfo();
+
 }
