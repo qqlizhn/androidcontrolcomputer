@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">手机控制电脑v1.141</string>
+
+    <string name="title">手机控制电脑[提示：按步骤操作]</string>
+    
+    <string name="button_connwifi">第一步：[手工设置]WIFI连接无线路由</string>
+    <string name="button_getpc">第二步：获取控制电脑</string>  
+<string name="button_shutdown">第三步：操作->关闭电脑</string>
+<string name="button_reboot">第三步：操作->重启电脑</string>
+<string name="button_logoff">第三步：操作->注销电脑</string>
+
+</resources>
