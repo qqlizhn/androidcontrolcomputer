@@ -1,25 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" 
+ android:layout_width="fill_parent" 
+ android:layout_height="fill_parent">
+
+<LinearLayout    
+    android:id="@+id/linearlayout_layout"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     >
 
 
 <TextView  
-    android:id ="@+id/textView_iphostname"
+    android:id ="@+id/textView_statetext"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/title"
     />
     
 
-<Button android:text="@string/button_connwifi" android:id="@+id/button_connwifi" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<!--
+<CheckBox android:text="liaowufeng-192.168.1.103" android:id="@+id/CheckBox01" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="ibm-192.168.1.104" android:id="@+id/CheckBox02" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="boco-192.168.1.105" android:id="@+id/CheckBox03" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
 
-<Button android:text="@string/button_getip" android:id="@+id/button_getip" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<CheckBox android:text="liaowufeng-192.168.1.103" android:id="@+id/CheckBox01" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="ibm-192.168.1.104" android:id="@+id/CheckBox02" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="boco-192.168.1.105" android:id="@+id/CheckBox03" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+
+<CheckBox android:text="liaowufeng-192.168.1.103" android:id="@+id/CheckBox01" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="ibm-192.168.1.104" android:id="@+id/CheckBox02" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+<CheckBox android:text="boco-192.168.1.105" android:id="@+id/CheckBox03" android:layout_width="fill_parent" android:layout_height="wrap_content"></CheckBox>
+-->
+
+<Button android:text="@string/button_connwifi" android:id="@+id/button_connwifi" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
+<Button android:text="@string/button_getpc" android:id="@+id/button_getpc" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 <Button android:text="@string/button_shutdown" android:id="@+id/button_shutdown" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 <Button android:text="@string/button_reboot" android:id="@+id/button_reboot" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 <Button android:text="@string/button_logoff" android:id="@+id/button_logoff" android:layout_width="fill_parent" android:layout_height="wrap_content"></Button>
 
 
 </LinearLayout>
+
+</ScrollView>
