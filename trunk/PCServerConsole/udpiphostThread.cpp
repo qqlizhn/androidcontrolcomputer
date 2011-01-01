@@ -22,8 +22,8 @@ void udp_sendiphostname(int udp_port){
 	 if(LOBYTE(wsaData.wVersion)!=2 || HIBYTE(wsaData.wVersion)!=2) {
 
          printf("信息:<获取IP> DLL 版本不正确，应是 2.2 版本\n");
-	       WSACleanup();
-		   return ;
+	     WSACleanup();
+		 return ;
 	 }
 
 	 SOCKET sockServer = socket(AF_INET,SOCK_DGRAM,0);
@@ -55,16 +55,19 @@ void udp_sendiphostname(int udp_port){
 
      char hostName[512];  // 主机名
      char hostAddress[512];  // 主机IP
-     char msg[1024];          // 消息=主机IP-主机名
+     char msg[1024];          // 消息=主机IP-主机IP-主机IP-主机名
 
-	 ::memset(recvBuf,0,sizeof(recvBuf));
-	 ::memset(hostName,0,sizeof(hostName));
-	 ::memset(hostAddress,0,sizeof(hostAddress));
-	 ::memset(msg,0,sizeof(msg));
+
 
 	 ::printf("信息:<获取IP> 初始化成功\n");
 
 	 while(true){
+
+         ::memset(recvBuf,0,sizeof(recvBuf));
+	     ::memset(hostName,0,sizeof(hostName));
+	     ::memset(hostAddress,0,sizeof(hostAddress));
+	     ::memset(msg,0,sizeof(msg));
+
 		 ::printf("信息:<获取IP> 进入等待广播消息\n");
           int result = recvfrom(sockServer,recvBuf,sizeof(recvBuf),0,(SOCKADDR *)&addrClient,&len);
 		  ::printf("信息:<获取IP> 接收到广播消息 %d\n",result);
@@ -85,11 +88,17 @@ void udp_sendiphostname(int udp_port){
                  hostEntry = gethostbyname( hostName );
                  //提取IP地址
                  if( hostEntry != 0 ){
-                      sprintf_s(hostAddress , "%d.%d.%d.%d" ,(hostEntry->h_addr_list[0][0]&0x00ff),(hostEntry->h_addr_list[0][1]&0x00ff),
-                         (hostEntry->h_addr_list[0][2]&0x00ff) ,(hostEntry->h_addr_list[0][3]&0x00ff));
+                     // 解决存在多IP 下的 BUG
+					 for(int _i=0;hostEntry->h_addr_list[_i]!=0;_i++){
+						 char ip[32];
+						 // 修正 BUG ，分隔符由"-" 改为 "#" ,原因 主机名可以包括"-" 字符，但不允许包括"#"字符
+						 sprintf_s(ip,"%d.%d.%d.%d#",hostEntry->h_addr_list[_i][0]&0x00ff,
+							 hostEntry->h_addr_list[_i][1]&0x00ff,hostEntry->h_addr_list[_i][2]&0x00ff,hostEntry->h_addr_list[_i][3]&0x00ff);
+						 strcat_s(hostAddress,ip);
+					 }
                  }
 	             printf("信息:<获取IP> get ip: %s\n",hostAddress);
-                 sprintf_s(msg,"%s-%s",hostAddress,hostName);
+                 sprintf_s(msg,"%s%s",hostAddress,hostName);
 	             printf("信息:<获取IP> %s\n",msg);
 				 ::printf("信息:<获取IP> 发送IP HOSTNAME %s\n",msg);
                  int iret = sendto(sockServer,msg,sizeof(msg),0,(sockaddr*)&addrClient,sizeof(addrClient));

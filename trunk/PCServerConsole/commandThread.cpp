@@ -81,16 +81,14 @@ void tcp_listenoper(int tcp_port) {
 
 		if(len>0){
 			if(strcmp(recvBuf,"cmd:android->pc:shutdown")==0){
-				//::MessageBox(NULL,_T("cmd:android->pc:close"),_T("提示"),0);
+                ::printf("信息:<接收命令> 执行关机\n");
 			    ShutDown();
 			}else if(strcmp(recvBuf,"cmd:android->pc:reboot")==0){
-			    //
-				//::MessageBox(NULL,_T("cmd:android->pc:reboot"),_T("提示"),0);
+				 ::printf("信息:<接收命令> 执行重启\n");
 				::Reboot();
 			}else if(strcmp(recvBuf,"cmd:android->pc:logoff")==0){
-			    //
-				//::MessageBox(NULL,_T("cmd:android->pc:logoff"),_T("提示"),0);
-				::LogOff();
+				 ::printf("信息:<接收命令> 执行注销\n");
+				 ::LogOff();
 
 			}
 		}else {
